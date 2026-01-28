@@ -1,5 +1,15 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
+const ENV = process.env.NODE_ENV;
+let curlUrl;
+
+if (ENV == "dev") {
+    curlUrl = "http://localhost:3001"
+}
+else if (ENV == "prod") {
+    curlUrl = "http://localhost:3001"
+}
+
 const swaggerSpec = swaggerJSDoc({
     definition: {
         openapi: "3.0.0",
@@ -10,7 +20,7 @@ const swaggerSpec = swaggerJSDoc({
         },
         servers: [
             {
-                url: "http://localhost:3001",
+                url: curlUrl,
             },
         ],
     },
