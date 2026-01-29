@@ -42,7 +42,7 @@ const app = express();
 
 
 // SWAGGER
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // AUTH
 app.use(apiKeyAuth);
 // API
