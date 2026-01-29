@@ -21,6 +21,7 @@ import historical from "./routes/historical.route.js";
 import options from "./routes/options.route.js";
 import priceChart from "./routes/priceChart.route.js";
 import insertPrices from "./routes/insertPrices.js";
+import { apiKeyAuth } from "./utils/common.js";
 
 /**
  * DATABASE-----------------------------------------------------------------------
@@ -36,8 +37,14 @@ import yf from "./services/yahoo.js";
 
 const app = express();
 
+
+
+
+
 // SWAGGER
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// AUTH
+app.use(apiKeyAuth);
 // API
 app.use("/api/quote", quoteRoute);
 app.use("/api/insights", insightsRoute);

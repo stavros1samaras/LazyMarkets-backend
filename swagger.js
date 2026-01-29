@@ -13,6 +13,21 @@ else if (ENV == "prod") {
 const swaggerSpec = swaggerJSDoc({
     definition: {
         openapi: "3.0.0",
+        components: {
+            securitySchemes: {
+                ApiKeyAuth: {
+                    type: "apiKey",
+                    in: "header",
+                    name: "x-api-key",
+                },
+            },
+        },
+
+        security: [
+            {
+                ApiKeyAuth: [],
+            },
+        ],
         info: {
             title: "Finance API",
             version: "1.0.0",
