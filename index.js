@@ -21,7 +21,7 @@ import historical from "./routes/historical.route.js";
 import options from "./routes/options.route.js";
 import priceChart from "./routes/priceChart.route.js";
 import insertPrices from "./routes/insertPrices.js";
-import population from "./world bank/routes/population.js";
+import country from "./world bank/routes/country.js";
 
 import { apiKeyAuth } from "./utils/common.js";
 
@@ -58,7 +58,7 @@ app.use("/api/options", options);
 app.use("/api/fill-db-with-ticker-prices", insertPrices);
 // DB
 app.use("/api/db/prices", pricesController);
-app.use("/api/db/population", population);
+app.use("/api/db/country", country);
 
 const PORT = process.env.PORT || 3002;
 const ENV = process.env.NODE_ENV;

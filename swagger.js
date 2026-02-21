@@ -4,10 +4,9 @@ const ENV = process.env.NODE_ENV;
 let curlUrl;
 
 if (ENV == "dev") {
-    curlUrl = "http://localhost:3001"
-}
-else if (ENV == "prod") {
-    curlUrl = "http://localhost:3001"
+    curlUrl = "http://localhost:3001";
+} else if (ENV == "prod") {
+    curlUrl = "http://localhost:3001";
 }
 
 const swaggerSpec = swaggerJSDoc({
@@ -40,7 +39,7 @@ const swaggerSpec = swaggerJSDoc({
         ],
     },
 
-    apis: ["./swagger.docs.js"],
+    apis: ["./swagger/swagger.docs.js", "./swagger/worldBank.docs.js"],
 });
 
 export default swaggerSpec;
