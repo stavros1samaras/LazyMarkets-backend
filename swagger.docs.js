@@ -11,6 +11,30 @@
  *     description: Stock recommendations
  */
 
+/**
+ * @swagger
+ * /api/db/population/set-population/{country}/{startYear}:
+ *   get:
+ *     tags: [DB]
+ *     summary: Insert population data into DB
+ *     parameters:
+ *       - name: country
+ *         in: path
+ *         required: true
+ *         example: GR
+ *       - name: startYear
+ *         in: path
+ *         required: true
+ *         example: 2005
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Invalid parameters
+ *       500:
+ *         description: Server error
+ */
+
 /** PRICE CHART - SWAGGER UI
  * @swagger
  * /api/priceChart/{symbol}:
@@ -100,7 +124,6 @@
  *       200:
  *         description: OK
  */
-
 
 /** INSIGHTS - SWAGGER UI
  * @swagger
