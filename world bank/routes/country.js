@@ -1,6 +1,7 @@
 import express from "express";
 import { insertIndicators } from "../utils/country.js";
 import { db } from "../../db.js";
+import { allCountries } from "../constants.js";
 
 const router = express.Router();
 
@@ -56,6 +57,32 @@ router.get("/set-country-data/:country/:startYear", async (req, res) => {
 
     res.status(200).json({
       country,
+      startYear,
+      endYear,
+      results,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/set-countries-data/:startYear", async (req, res) => {
+  try {
+    const startYear = parseInt(req.params.startYear);
+    const endYear = 2026;
+
+    if (isNaN(startYear)) {
+      return res.status(400).json({ error: "Year route param is required" });
+    }
+
+    const results = [];
+
+    for (const country of allCountries) {
+      const countryResult = await insertIndicators(country, startYear, endYear);
+      results.push({ country, data: countryResult });
+    }
+    res.status(200).json({
+      allCountries,
       startYear,
       endYear,
       results,

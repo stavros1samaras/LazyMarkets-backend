@@ -44,3 +44,26 @@
  *       500:
  *         description: Server error
  */
+
+/**
+ * @swagger
+ * /api/db/country/set-countries-data/{startYear}:
+ *   get:
+ *     tags:
+ *       - DB
+ *     summary: Fetch and store data for all countries
+ *     parameters:
+ *       - name: startYear
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2005
+ *     responses:
+ *       200:
+ *         description: OK
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Server error
+ */

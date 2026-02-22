@@ -17,7 +17,7 @@ export async function insertIndicators(country, startYear, endYear = 2026) {
     if (dataArray) {
       doc[key] = dataArray;
     }
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   if (Object.keys(doc).length === 1) {
