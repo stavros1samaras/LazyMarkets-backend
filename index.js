@@ -38,6 +38,8 @@ import yf from "./services/yahoo.js";
 
 const app = express();
 
+app.use(express.json());
+
 // SWAGGER
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // AUTH
@@ -59,6 +61,15 @@ app.use("/api/fill-db-with-ticker-prices", insertPrices);
 // DB
 app.use("/api/db/prices", pricesController);
 app.use("/api/db/country", country);
+
+// import qaRoute from "./qa.js";
+// app.use("/api/qa", qaRoute);
+
+
+app.get("/getSentence", async (req, res) => {
+
+  res.json(`As the sun slowly set behind the snow-capped mountains, painting the sky with breathtaking shades of orange, pink, and deep purple, the young traveler sat alone at the edge of the old wooden bridge, gazing at the river flowing gently beneath him, thinking about everything he had left behind in the city — his friends, his memories, the dreams he never had the courage to pursue — and wondered whether it was ever truly too late for a person to start over and finally live the life they had always imagined for themselves.As the sun slowly set behind the snow-capped mountains, painting the sky with breathtaking shades of orange, pink, and deep purple, the young traveler sat alone at the edge of the old wooden bridge, gazing at the river flowing gently beneath him, thinking about everything he had left behind in the city — his friends, his memories, the dreams he never had the courage to pursue — and wondered whether it was ever truly too late for a person to start over and finally live the life they had always imagined for themselves.`)
+});
 
 const PORT = process.env.PORT || 3002;
 const ENV = process.env.NODE_ENV;
