@@ -28,10 +28,8 @@ router.get("/get-country-data/:country", async (req, res) => {
       });
     }
 
-    res.status(200).json({
-      status: "success",
-      data: doc,
-    });
+    res.status(200).json(doc);
+
   } catch (error) {
     res.status(500).json({
       error: error.message,
