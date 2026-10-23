@@ -3,8 +3,8 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "nodemon -r dotenv/config src/index.js",
-		"start": "node src/index.js"
+		"dev": "set NODE_ENV=dev&& nodemon -r dotenv/config src/index.js",
+		"start": "set NODE_ENV=prod&& node -r dotenv/config src/index.js"
 	},
 	"dependencies": {
 		"dotenv": "^16.6.1",

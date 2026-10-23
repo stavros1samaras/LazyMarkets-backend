@@ -28,7 +28,7 @@ const swaggerSpec = swaggerJSDoc({
 			},
 		],
 		info: {
-			title: "Finance API",
+			title: "Lazy Markets API",
 			version: "1.0.0",
 			description: "All API documentation in one file",
 		},
@@ -39,7 +39,7 @@ const swaggerSpec = swaggerJSDoc({
 		],
 	},
 
-	apis: ["./src/_world-bank/docs.js", "./src/_fht/docs.js"],
+	apis: ["./src/_countries/docs.js", "./src/_fht/docs.js"],
 })
 
 export default swaggerSpec

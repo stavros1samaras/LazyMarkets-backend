@@ -1,23 +1,8 @@
-/**
- * SWAGGER-----------------------------------------------------------------------
- */
 import swaggerUi from "swagger-ui-express"
 import swaggerSpec from "./swagger.js"
-
-/**
- * API-----------------------------------------------------------------------
- */
 import express from "express"
-import country from "./_world-bank/_routes.js"
-
-/**
- * DATABASE-----------------------------------------------------------------------
- */
-import pricesController from "./_fht/_routes.js"
-
-/**
- * SERVICES-----------------------------------------------------------------------
- */
+import countryRouter from "./_countries/_routes.js"
+import fhtRouter from "./_fht/_routes.js"
 
 const app = express()
 
@@ -25,11 +10,23 @@ app.use(express.json())
 
 // SWAGGER
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-// AUTH
-// app.use(apiKeyAuth)
+
+// MIDDLEWARE
+
+app.use((req, res, next) => {
+	const key = req.headers["x-api-key"]
+
+	if (process.env.NODE_ENV === "prod") {
+		if (key !== process.env.API_KEY) {
+			return res.status(401).json({ error: "Unauthorized" })
+		}
+	}
+	next()
+})
+
 // DB
-app.use("/api/db/prices", pricesController)
-app.use("/api/db/country", country)
+app.use("/api/db/prices", fhtRouter)
+app.use("/api/db/country", countryRouter)
 
 const PORT = process.env.PORT || 3002
 const ENV = process.env.NODE_ENV
