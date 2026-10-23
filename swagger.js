@@ -1,7 +1,7 @@
-import swaggerJSDoc from "swagger-jsdoc";
+import swaggerJSDoc from "swagger-jsdoc"
 
-const ENV = process.env.NODE_ENV;
-let curlUrl;
+const ENV = process.env.NODE_ENV
+let curlUrl
 
 if (ENV == "dev") {
     curlUrl = "http://localhost:3001";
@@ -42,4 +42,4 @@ const swaggerSpec = swaggerJSDoc({
     apis: ["./swagger/swagger.docs.js", "./swagger/worldBank.docs.js"],
 });
 
-export default swaggerSpec;
+export default swaggerSpec

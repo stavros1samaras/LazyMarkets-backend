@@ -1,23 +1,23 @@
-import { balanceSheet } from "../utils/balanceSheet.js";
-import { hasNullValues } from "../utils/object.js";
+import { balanceSheet } from "../utils/balanceSheet.js"
+import { hasNullValues } from "../utils/object.js"
 
 export async function getBalanceSheet(symbol, query) {
-    try {
-        const data = await balanceSheet(symbol, query);
+	try {
+		const data = await balanceSheet(symbol, query)
 
-        return {
-            status: 200,
-            body: {
-                ...data,
-                hasNulls: hasNullValues(data.data)
-            }
-        };
-    } catch (error) {
-        return {
-            status: 500,
-            body: {
-                error: error.message
-            }
-        };
-    }
+		return {
+			status: 200,
+			body: {
+				...data,
+				hasNulls: hasNullValues(data.data),
+			},
+		}
+	} catch (error) {
+		return {
+			status: 500,
+			body: {
+				error: error.message,
+			},
+		}
+	}
 }

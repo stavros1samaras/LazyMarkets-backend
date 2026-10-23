@@ -1,4 +1,4 @@
-import YahooFinance from "yahoo-finance2";
+import YahooFinance from "yahoo-finance2"
 
 // const originalFetch = global.fetch;
 
@@ -10,16 +10,16 @@ import YahooFinance from "yahoo-finance2";
 // };
 
 const yf = new YahooFinance({
-    suppressNotices: ["ripHistorical"],
-    logger: {
-        error: console.error,
-        warn: console.warn,
-        info: () => { },
-        debug: () => { }
-    },
-    queue: {
-        concurrency: 1
-    }
-});
+	suppressNotices: ["ripHistorical"],
+	logger: {
+		error: console.error,
+		warn: console.warn,
+		info: () => {},
+		debug: () => {},
+	},
+	queue: {
+		concurrency: 1,
+	},
+})
 
-export default yf;
+export default yf

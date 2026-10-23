@@ -1,46 +1,43 @@
 export function apiKeyAuth(req, res, next) {
-    const key = req.headers["x-api-key"];
+	const key = req.headers["x-api-key"]
 
-    if (key !== process.env.API_KEY) {
-        return res.status(401).json({ error: "Unauthorized" });
-    }
+	if (key !== process.env.API_KEY) {
+		return res.status(401).json({ error: "Unauthorized" })
+	}
 
-    next();
+	next()
 }
 
 function unluckyDelay() {
-    const isUnlucky = Math.random() < 0.2;
-    if (isUnlucky) {
-        return 4300 + Math.random() * (7000 - 4000);
-    } else {
-        return null;
-    }
+	const isUnlucky = Math.random() < 0.2
+	if (isUnlucky) {
+		return 4300 + Math.random() * (7000 - 4000)
+	} else {
+		return null
+	}
 }
 
 export function delay(min = 2300, max = 3500) {
-    let ms = min + Math.random() * (max - min);
+	let ms = min + Math.random() * (max - min)
 
-    const rare = unluckyDelay();
-    if (rare !== null) {
-        ms = rare;
-    }
+	const rare = unluckyDelay()
+	if (rare !== null) {
+		ms = rare
+	}
 
-    const caller = getCaller();
-    console.log(`Delay ${caller} --> ${Number.parseInt(ms)}ms`);
+	const caller = getCaller()
+	console.log(`Delay ${caller} --> ${Number.parseInt(ms)}ms`)
 
-    return new Promise(resolve => setTimeout(resolve, ms));
-};
-
-
-
-export function getCaller(stackIndex = 3) {
-    const stack = new Error().stack;
-    const line = stack?.split("\n")[stackIndex]?.trim() || "";
-    return line.split("(")[0].trim();
+	return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+export function getCaller(stackIndex = 3) {
+	const stack = new Error().stack
+	const line = stack?.split("\n")[stackIndex]?.trim() || ""
+	return line.split("(")[0].trim()
+}
 
 export function randomDelay10to30s(minSec = 10, maxSec = 30) {
-    const ms = Math.floor(Math.random() * (maxSec - minSec + 1) + minSec) * 1000;
-    return new Promise(res => setTimeout(res, ms));
+	const ms = Math.floor(Math.random() * (maxSec - minSec + 1) + minSec) * 1000
+	return new Promise((res) => setTimeout(res, ms))
 }
