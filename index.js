@@ -8,24 +8,12 @@ import swaggerSpec from "./swagger.js"
  * API-----------------------------------------------------------------------
  */
 import express from "express"
-import quoteRoute from "./routes/quote.route.js"
-import insightsRoute from "./routes/insights.route.js"
-import quoteSummaryRoute from "./routes/quoteSummary.route.js"
-import quoteSummary2 from "./routes/quoteSummary2.route.js"
-import recommendationsRoute from "./routes/recommendations.route.js"
-import searchRoute from "./routes/search.route.js"
-import financials from "./routes/financials.route.js"
-import cashFlow from "./routes/cashFlow.route.js"
-import historical from "./routes/historical.route.js"
-import options from "./routes/options.route.js"
-import priceChart from "./routes/priceChart.route.js"
-import insertPrices from "./routes/insertPrices.js"
-import country from "./world bank/routes/country.js"
+import country from "./world-bank/routes/country.js"
 
 /**
  * DATABASE-----------------------------------------------------------------------
  */
-import pricesController from "./database/routes/prices.controller.js"
+import pricesController from "./fht/routes/prices.controller.js"
 
 /**
  * SERVICES-----------------------------------------------------------------------
@@ -39,19 +27,6 @@ app.use(express.json())
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 // AUTH
 // app.use(apiKeyAuth);
-// API
-app.use("/api/quote", quoteRoute)
-app.use("/api/insights", insightsRoute)
-app.use("/api/quote-summary", quoteSummaryRoute)
-app.use("/api/quote-summary2", quoteSummary2)
-app.use("/api/recommendations", recommendationsRoute)
-app.use("/api/search", searchRoute)
-app.use("/api/financials", financials)
-app.use("/api/cash-flow", cashFlow)
-app.use("/api/historical", historical)
-app.use("/api/priceChart", priceChart)
-app.use("/api/options", options)
-app.use("/api/fill-db-with-ticker-prices", insertPrices)
 // DB
 app.use("/api/db/prices", pricesController)
 app.use("/api/db/country", country)

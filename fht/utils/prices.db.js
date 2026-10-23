@@ -1,6 +1,6 @@
 import { db } from "../../db.js"
-import { priceChart } from "../../utils/priceChart.js"
-import { randomDelay10to30s } from "../../utils/common.js"
+import { priceChart } from "./priceChart.js"
+import { randomDelay10to30s } from "./common.js"
 
 const FHT_COLLECTION = process.env.FHT_COLLECTION_NAME
 
