@@ -39,7 +39,7 @@ const swaggerSpec = swaggerJSDoc({
 		],
 	},
 
-	apis: ["./world-bank/docs.js", "./fht/docs.js"],
+	apis: ["./src/world-bank/docs.js", "./src/fht/docs.js"],
 })
 
 export default swaggerSpec
