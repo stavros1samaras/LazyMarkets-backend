@@ -4,11 +4,12 @@
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 	"symbols.files.associations": {
-		"config.ts": "database",
+		"config.js": "database",
 		"*.config.ts": "database",
 		"db.js": "mongo",
 		"swagger.js": "code-green",
 		"docs.js": "code-green",
-		"index.js": "code-yellow"
+		"index.js": "code-yellow",
+		"_routes.js": "code-yellow"
 	}
 }

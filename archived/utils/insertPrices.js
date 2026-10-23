@@ -1,6 +1,6 @@
 import { priceChart } from "./priceChart.js"
 import { db } from "../db.js"
-import { randomDelay10to30s } from "./common.js"
+import { delay } from "../../src/utils/delay.js"
 
 export async function insertPrices(symbol, name, startYear = 2018, endYear = 2026) {
 	const results = []
@@ -12,7 +12,7 @@ export async function insertPrices(symbol, name, startYear = 2018, endYear = 202
 		const exists = await db.collection("prices").findOne({ symbol, year })
 		if (exists) continue
 
-		await randomDelay10to30s()
+		await delay(10000, 30000)
 
 		const period1 = `${year}-01-01`
 		const period2 = `${year + 1}-01-01`

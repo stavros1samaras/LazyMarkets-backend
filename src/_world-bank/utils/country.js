@@ -1,5 +1,5 @@
 import { db } from "../../db.js"
-import { indicators } from "../constants.js"
+import { indicators } from "../config.js"
 
 const POP_COLLECTION = process.env.WORLD_BANK_COLLECTION_NAME
 

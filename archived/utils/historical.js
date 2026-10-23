@@ -1,5 +1,5 @@
 import yf from "../services/yahoo.js"
-import { delay } from "./common.js"
+import { delay } from "../../src/utils/delay.js"
 
 export async function historical(symbol, query) {
 	const { period1, period2 } = query

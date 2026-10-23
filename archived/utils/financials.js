@@ -1,6 +1,6 @@
 import yf from "../services/yahoo.js"
 import { deleteByPath } from "./object.js"
-import { delay } from "./common.js"
+import { delay } from "../../src/utils/delay.js"
 
 export async function financials(symbol, query) {
 	if (!symbol) {

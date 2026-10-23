@@ -1,7 +1,7 @@
 import express from "express"
-import { insertIndicators } from "../utils/country.js"
-import { db } from "../../db.js"
-import { allCountries } from "../constants.js"
+import { insertIndicators } from "./utils/country.js"
+import { db } from "../db.js"
+import { allCountries } from "./config.js"
 
 const router = express.Router()
 

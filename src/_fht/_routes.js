@@ -1,16 +1,19 @@
 import express from "express"
-import { findPrices } from "../utils/prices.db.js"
-import { insertPrices } from "../utils/prices.db.js"
+import { findPrices } from "./utils/prices.db.js"
+import { insertPrices } from "./utils/prices.db.js"
 
 const router = express.Router()
 
 router.get("/get-ticker-one-year/:symbol/:year", async (req, res) => {
 	// URL: /api/db/prices/get-ticker-one-year/:symbol/:year
+
+	const symbol = req.params.symbol?.toUpperCase()
+	const year = parseInt(req.params.year)
+
+	if (!symbol || Number.isNaN(year))
+		return res.status(400).json({ error: "Invalid symbol or year" })
+
 	try {
-		const symbol = req.params.symbol?.toUpperCase()
-		const year = parseInt(req.params.year)
-		if (!symbol || Number.isNaN(year))
-			return res.status(400).json({ error: "Invalid symbol or year" })
 		const data = await findPrices(symbol, year)
 		res.status(200).json(data)
 	} catch (error) {

@@ -1,18 +1,9 @@
-import yf from "../services/yahoo.js"
-import { delay } from "./common.js"
+import yf from "../yahoo.js"
+import { delay } from "../../utils/delay.js"
+import { formatDateToYMD, formatDateToDMYShortYear } from "./dates.js"
 
 function truncateToTwoDecimals(value) {
 	return Math.trunc(value * 100) / 100
-}
-
-function formatDateToYMD(date) {
-	return date.toISOString().split("T")[0]
-}
-
-function formatDateToDMYShortYear(dateStr) {
-	const [year, month, day] = dateStr.split("-")
-	const shortYear = year.slice(-2)
-	return `${day}-${month}-${shortYear}`
 }
 
 export async function priceChart(symbol, query) {

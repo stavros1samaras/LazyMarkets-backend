@@ -8,12 +8,12 @@ import swaggerSpec from "./swagger.js"
  * API-----------------------------------------------------------------------
  */
 import express from "express"
-import country from "./world-bank/routes/country.js"
+import country from "./_world-bank/_routes.js"
 
 /**
  * DATABASE-----------------------------------------------------------------------
  */
-import pricesController from "./fht/routes/prices.controller.js"
+import pricesController from "./_fht/_routes.js"
 
 /**
  * SERVICES-----------------------------------------------------------------------
@@ -26,7 +26,7 @@ app.use(express.json())
 // SWAGGER
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 // AUTH
-// app.use(apiKeyAuth);
+// app.use(apiKeyAuth)
 // DB
 app.use("/api/db/prices", pricesController)
 app.use("/api/db/country", country)
