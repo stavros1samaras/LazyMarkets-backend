@@ -1,14 +1,14 @@
 /**
  * @swagger
  * tags:
- *   - name: DB
+ *   - name: Countries
  */
 
 /**
  * @swagger
  * /api/db/country/get-country-data/{country}:
  *   get:
- *     tags: [DB]
+ *     tags: [Countries]
  *     summary: Get stored data for a specific country
  *     parameters:
  *       - name: country
@@ -25,7 +25,7 @@
  * @swagger
  * /api/db/country/set-country-data/{country}/{startYear}:
  *   get:
- *     tags: [DB]
+ *     tags: [Countries]
  *     summary: Insert population data into DB
  *     parameters:
  *       - name: country
@@ -50,7 +50,7 @@
  * /api/db/country/set-countries-data/{startYear}:
  *   get:
  *     tags:
- *       - DB
+ *       - Countries
  *     summary: Fetch and store data for all countries
  *     parameters:
  *       - name: startYear

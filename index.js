@@ -14,7 +14,6 @@ import quoteSummaryRoute from "./routes/quoteSummary.route.js"
 import quoteSummary2 from "./routes/quoteSummary2.route.js"
 import recommendationsRoute from "./routes/recommendations.route.js"
 import searchRoute from "./routes/search.route.js"
-import balanceSheetRoute from "./routes/balanceSheet.route.js"
 import financials from "./routes/financials.route.js"
 import cashFlow from "./routes/cashFlow.route.js"
 import historical from "./routes/historical.route.js"
@@ -47,7 +46,6 @@ app.use("/api/quote-summary", quoteSummaryRoute)
 app.use("/api/quote-summary2", quoteSummary2)
 app.use("/api/recommendations", recommendationsRoute)
 app.use("/api/search", searchRoute)
-app.use("/api/balance-sheet", balanceSheetRoute)
 app.use("/api/financials", financials)
 app.use("/api/cash-flow", cashFlow)
 app.use("/api/historical", historical)
