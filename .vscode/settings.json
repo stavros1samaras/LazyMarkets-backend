@@ -11,5 +11,8 @@
 		"docs.js": "code-green",
 		"index.js": "code-yellow",
 		"_routes.js": "code-yellow"
-	}
+	},
+	"symbols.folders.associations": {
+		"DB_utils": "folder-mongo"
+	},
 }

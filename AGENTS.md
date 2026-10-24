@@ -47,3 +47,16 @@ Project-wide rules for any AI agent working in this repository. Read them before
 - We will organize the code better, delete things that are no longer needed, and hide/tuck away files that shouldn't be part of the public surface — but only where it makes the project simpler and cleaner.
 - The outcome we want is a **simpler, cleaner, better organized** architecture, not a more elaborate one.
 - If a refactor would change behavior or the public API, stop and ask before proceeding.
+
+## 6. Destructure middlewareData in route handlers
+
+- In Express route callback functions, **always destructure variables from `req.middlewareData`** at the start of the function body.
+- This improves readability and makes it clear which validated data is being used.
+- Example:
+  ```javascript
+  ;async (req, res) => {
+  	const { symbol, year } = req.middlewareData
+  	// Use symbol and year directly instead of req.middlewareData.symbol
+  }
+  ```
+- Apply this pattern consistently across all route handlers that access `req.middlewareData`.

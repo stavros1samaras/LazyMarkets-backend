@@ -6,7 +6,7 @@ function truncateToTwoDecimals(value) {
 	return Math.trunc(value * 100) / 100
 }
 
-export async function priceChart(symbol, query) {
+export async function fetchSingleAssetData(symbol, query) {
 	const { period1, period2 } = query
 
 	if (!symbol) {
