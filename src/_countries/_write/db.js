@@ -20,13 +20,20 @@ export async function insertIndicators(country, startYear, endYear = 2025) {
 		throw new AppError(404, `No indicator data found for country "${country}"`)
 	}
 
-	const result = await db
-		.collection(POP_COLLECTION)
-		.replaceOne({ country }, doc, { upsert: true })
+	try {
+		const result = await db
+			.collection(POP_COLLECTION)
+			.replaceOne({ country }, doc, { upsert: true })
 
-	return {
-		status: "success",
-		upsertedCount: result.upsertedCount || 0,
-		modifiedCount: result.modifiedCount,
+		return {
+			status: "success",
+			upsertedCount: result.upsertedCount || 0,
+			modifiedCount: result.modifiedCount,
+		}
+	} catch (error) {
+		throw new AppError(
+			500,
+			`Failed to save data for country "${country}": ${error.message}`
+		)
 	}
 }
