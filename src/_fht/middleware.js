@@ -1,8 +1,10 @@
+import AppError from "../AppError.js"
+
 export const validateTicker = (req, res, next) => {
 	const symbol = req.params.symbol?.toUpperCase()
 
 	if (!symbol) {
-		return res.status(400).json({ error: "Invalid symbol" })
+		throw new AppError(400, "Invalid or missing ticker symbol")
 	}
 
 	req.middlewareData.symbol = symbol

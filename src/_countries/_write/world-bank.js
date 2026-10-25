@@ -1,8 +1,14 @@
+import AppError from "../../AppError.js"
+
 export async function fetchIndicatorData(country, startYear, endYear, indicator) {
 	const url = `https://api.worldbank.org/v2/country/${country}/indicator/${indicator}?format=json&date=${startYear}:${endYear}`
 	const response = await fetch(url)
 
-	if (!response.ok) throw new Error(`No data found for ${indicator}`)
+	if (!response.ok)
+		throw new AppError(
+			404,
+			`Failed to fetch indicator "${indicator}" for "${country}" (status: ${response.status})`
+		)
 
 	const data = await response.json()
 	const records = data[1] || []

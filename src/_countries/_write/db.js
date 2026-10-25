@@ -1,6 +1,7 @@
 import { db } from "../../db.js"
 import { indicators } from "../config.js"
 import { fetchIndicatorData } from "./world-bank.js"
+import AppError from "../../AppError.js"
 
 const POP_COLLECTION = process.env.WORLD_BANK_COLLECTION_NAME
 
@@ -16,7 +17,7 @@ export async function insertIndicators(country, startYear, endYear = 2025) {
 	}
 
 	if (Object.keys(doc).length === 1) {
-		throw new Error("No data found")
+		throw new AppError(404, `No indicator data found for country "${country}"`)
 	}
 
 	const result = await db

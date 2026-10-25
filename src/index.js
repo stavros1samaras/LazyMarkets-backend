@@ -33,6 +33,19 @@ app.use("/api/db/prices", fhtSetRouter)
 app.use("/api/db/country", countryReadRouter)
 app.use("/api/db/country", countryWriteRouter)
 
+// ERROR HANDLING MIDDLEWARE (must be after all routes)
+app.use((err, req, res, next) => {
+	const statusCode = err.code || 500
+	const message = err.message || "Internal server error"
+
+	// // Log error for debugging
+	// console.error(`[${statusCode}] ${req.method} ${req.url}:`, err)
+
+	res.status(statusCode).json({
+		error: message,
+	})
+})
+
 const PORT = process.env.PORT || 3002
 const ENV = process.env.NODE_ENV
 

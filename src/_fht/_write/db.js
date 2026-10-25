@@ -2,6 +2,7 @@ import { db } from "../../db.js"
 import { fetchSingleAssetData } from "./yahoo-finance.js"
 import { delay } from "../../utils/delay.js"
 import { getSingleAssetData } from "../_read/db.js"
+import AppError from "../../AppError.js"
 
 const FHT_COLLECTION = process.env.FHT_COLLECTION_NAME
 
@@ -11,7 +12,14 @@ export async function setSingleAssetData(symbol, name, year) {
 	const data = await fetchSingleAssetData(symbol, { period1, period2 })
 
 	const doc = { symbol: data.symbol, name, year, count: data.count, data: data.data }
-	await db.collection(FHT_COLLECTION).insertOne(doc)
+	try {
+		await db.collection(FHT_COLLECTION).insertOne(doc)
+	} catch (error) {
+		throw new AppError(
+			500,
+			`Failed to insert data for "${symbol}" year ${year}: ${error.message}`
+		)
+	}
 }
 
 export async function setAssetDataRange(symbol, name, startYear = 2018, endYear = 2026) {

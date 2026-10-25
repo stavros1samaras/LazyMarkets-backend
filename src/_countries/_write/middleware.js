@@ -1,8 +1,10 @@
+import AppError from "../../AppError.js"
+
 export const validateStartYear = (req, res, next) => {
 	const startYear = parseInt(req.params.startYear, 10)
 
 	if (Number.isNaN(startYear)) {
-		return res.status(400).json({ error: "Invalid start year" })
+		throw new AppError(400, "Invalid start year parameter")
 	}
 
 	req.middlewareData.startYear = startYear

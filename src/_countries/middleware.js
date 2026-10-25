@@ -1,8 +1,10 @@
+import AppError from "../AppError.js"
+
 export const validateCountry = (req, res, next) => {
 	const country = req.params.country?.toUpperCase()
 
 	if (!country) {
-		return res.status(400).json({ error: "Invalid country" })
+		throw new AppError(400, "Invalid or missing country code")
 	}
 
 	req.middlewareData.country = country
