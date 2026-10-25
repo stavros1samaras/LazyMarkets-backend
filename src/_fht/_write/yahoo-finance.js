@@ -1,6 +1,6 @@
 import yf from "../yahoo.js"
 import { delay } from "../../utils/delay.js"
-import { formatDateToYMD, formatDateToDMYShortYear } from "./dates.js"
+import { formatDateToYMD, formatDateToDMYShortYear } from "../utils/dates.js"
 
 function truncateToTwoDecimals(value) {
 	return Math.trunc(value * 100) / 100

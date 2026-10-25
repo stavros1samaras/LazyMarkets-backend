@@ -1,7 +1,7 @@
 import { db } from "../../db.js"
 import { fetchSingleAssetData } from "./yahoo-finance.js"
 import { delay } from "../../utils/delay.js"
-import { getSingleAssetData } from "../../_read/db.js"
+import { getSingleAssetData } from "../_read/db.js"
 
 const FHT_COLLECTION = process.env.FHT_COLLECTION_NAME
 
