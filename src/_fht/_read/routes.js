@@ -1,5 +1,5 @@
 import express from "express"
-import { getSingleAssetData } from "../DB_utils/read.js"
+import { getSingleAssetData } from "./db.js"
 import { validateTicker } from "../middleware.js"
 import { validateYear } from "./middleware.js"
 

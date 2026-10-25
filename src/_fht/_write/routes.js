@@ -1,5 +1,5 @@
 import express from "express"
-import { setAssetDataRange } from "../DB_utils/r-w.js"
+import { setAssetDataRange } from "./db.js"
 import { validateTicker } from "../middleware.js"
 import { validateName, validateYearRange } from "./middleware.js"
 

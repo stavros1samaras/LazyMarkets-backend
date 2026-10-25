@@ -5,7 +5,7 @@
         "target": "ES2022",
         "checkJs": false,
         "paths": {
-            "@/*": [
+            "#/*": [
                 "./src/*"
             ]
         }

@@ -1,7 +1,8 @@
 import swaggerUi from "swagger-ui-express"
 import swaggerSpec from "./swagger.js"
 import express from "express"
-import countryRouter from "./_countries/_routes.js"
+import countryReadRouter from "./_countries/_read/routes.js"
+import countryWriteRouter from "./_countries/_write/routes.js"
 import fhtGetRouter from "./_fht/_read/routes.js"
 import fhtSetRouter from "./_fht/_write/routes.js"
 
@@ -29,7 +30,8 @@ app.use((req, res, next) => {
 // ROUTES
 app.use("/api/db/prices", fhtGetRouter)
 app.use("/api/db/prices", fhtSetRouter)
-app.use("/api/db/country", countryRouter)
+app.use("/api/db/country", countryReadRouter)
+app.use("/api/db/country", countryWriteRouter)
 
 const PORT = process.env.PORT || 3002
 const ENV = process.env.NODE_ENV
