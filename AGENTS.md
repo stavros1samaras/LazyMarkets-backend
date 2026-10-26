@@ -60,3 +60,11 @@ Project-wide rules for any AI agent working in this repository. Read them before
   }
   ```
 - Apply this pattern consistently across all route handlers that access `req.middlewareData`.
+
+## 7. Keep Swagger docs in sync with endpoint URLs
+
+- Whenever an endpoint URL changes — path, path parameters, HTTP method, or mount prefix — **always update the corresponding Swagger (OpenAPI) docs file in the same change**.
+- This is part of the change, not an optional follow-up. Never leave docs describing an old URL.
+- Also update the docs when a new endpoint is added or one is removed, so the documentation matches the actual routes.
+- The JSDoc `@swagger` path must always match the real, fully mounted URL (mount prefix + router path).
+- To verify, compare the route registration (router path + mount prefix) against the `@swagger` path — do not guess.

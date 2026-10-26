@@ -27,11 +27,17 @@ app.use((req, res, next) => {
 	next()
 })
 
-// ROUTES
+// LEGACY ROUTES
 app.use("/api/db/prices", fhtGetRouter)
 app.use("/api/db/prices", fhtSetRouter)
 app.use("/api/db/country", countryReadRouter)
 app.use("/api/db/country", countryWriteRouter)
+
+// ROUTES
+app.use("/prices", fhtGetRouter)
+app.use("/prices", fhtSetRouter)
+app.use("/countries", countryReadRouter)
+app.use("/countries", countryWriteRouter)
 
 // ERROR HANDLING MIDDLEWARE (must be after all routes)
 app.use((err, req, res, next) => {
