@@ -10,7 +10,8 @@
 		"swagger.js": "code-green",
 		"docs.js": "code-green",
 		"index.js": "code-yellow",
-		"_routes.js": "code-yellow"
+		"_routes.js": "code-yellow",
+		"Database.js": "supabase"
 	},
 	"symbols.folders.associations": {
 		"DB_utils": "folder-mongo"

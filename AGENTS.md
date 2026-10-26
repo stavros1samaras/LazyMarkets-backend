@@ -41,11 +41,9 @@ Project-wide rules for any AI agent working in this repository. Read them before
 
 ## 5. Current focus: architecture refactoring only
 
-- Every change right now is about **project architecture**. The main goal is to refactor the project's architecture.
+- The current architecture looks good and is solid for now. It might need some changes in the future, but at the moment it is good.
 - Everything **must work exactly as before**. Refactoring must be behavior-preserving: same URLs, same request/response shapes, same status codes.
 - Behavior changes, small features, or improvements are allowed **only when the developer explicitly asks for them** — do not add them on your own initiative as a side effect of a refactor.
-- We will organize the code better, delete things that are no longer needed, and hide/tuck away files that shouldn't be part of the public surface — but only where it makes the project simpler and cleaner.
-- The outcome we want is a **simpler, cleaner, better organized** architecture, not a more elaborate one.
 - If a refactor would change behavior or the public API, stop and ask before proceeding.
 
 ## 6. Destructure middlewareData in route handlers
