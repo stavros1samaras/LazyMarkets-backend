@@ -5,7 +5,11 @@ import {
 	fetchAndInsertForAllEventYears,
 } from "./utils.js"
 import { validateTicker } from "../middleware.js"
-import { validateName, validateYearRange, validateYearMax2025 } from "./middleware.js"
+import {
+	validateName,
+	validateStartEndYearRange,
+	validateYearRange,
+} from "./middleware.js"
 import asyncHandler from "../../utils/asyncHandler.js"
 
 const router = express.Router()
@@ -14,7 +18,7 @@ router.get(
 	"/insert-ticker-prices/:symbol/:name",
 	validateTicker,
 	validateName,
-	validateYearRange,
+	validateStartEndYearRange,
 	asyncHandler(async (req, res) => {
 		const { symbol, name, startYear, endYear } = req.middlewareData
 		const results = await setAssetDataRange(symbol, name, startYear, endYear)
@@ -32,7 +36,7 @@ router.get(
  */
 router.get(
 	"/fetch-missing-symbols/:year",
-	validateYearMax2025,
+	validateYearRange,
 	asyncHandler(async (req, res) => {
 		const { year } = req.middlewareData
 		const processedSymbols = await fetchAndInsertAllMissingSymbols(year)

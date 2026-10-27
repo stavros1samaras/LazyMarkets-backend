@@ -1,7 +1,7 @@
 import express from "express"
 import { getSingleAssetData } from "./db.js"
 import { validateTicker } from "../middleware.js"
-import { validateYear, validateYearMax2025 } from "./middleware.js"
+import { validateYear, validateYearRange } from "./middleware.js"
 import { checkAllSymbolsByYear, getSymbolsWithoutData } from "./utils.js"
 import { EVENTS } from "../Database.js"
 import asyncHandler from "../../utils/asyncHandler.js"
@@ -24,7 +24,7 @@ router.get(
  */
 router.get(
 	"/check-all-symbols/:year",
-	validateYearMax2025,
+	validateYearRange,
 	asyncHandler(async (req, res) => {
 		const { year } = req.middlewareData
 		const data = await checkAllSymbolsByYear(year)
@@ -37,7 +37,7 @@ router.get(
  */
 router.get(
 	"/missing-symbols/:year",
-	validateYearMax2025,
+	validateYearRange,
 	asyncHandler(async (req, res) => {
 		const { year } = req.middlewareData
 		const missingSymbols = await getSymbolsWithoutData(year)

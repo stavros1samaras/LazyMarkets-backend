@@ -293,7 +293,7 @@
  *   get:
  *     tags: [FHT-NEXT]
  *     summary: Fetch and insert data for all missing symbols for all event years
- *     description: Extracts unique years from the EVENTS configuration, then for each year, identifies and fetches data for all missing symbols. This is a comprehensive endpoint that processes multiple years sequentially. Note: This operation may take a long time due to 20-second delays between each symbol fetch.
+ *     description: "Extracts unique years from the EVENTS configuration, then for each year, identifies and fetches data for all missing symbols. This is a comprehensive endpoint that processes multiple years sequentially. Note: This operation may take a long time due to 20-second delays between each symbol fetch."
  *     responses:
  *       200:
  *         description: Object containing results for each event year

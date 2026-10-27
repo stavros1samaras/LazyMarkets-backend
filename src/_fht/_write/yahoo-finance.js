@@ -1,22 +1,42 @@
 import yf from "../yahoo.js"
 import { delay } from "../../utils/delay.js"
 import { formatDateToYMD, formatDateToDMYShortYear } from "../utils/dates.js"
-import AppError from "../../AppError.js"
 import { insertDocument } from "./db.js"
 
 function truncateToTwoDecimals(value) {
 	return Math.trunc(value * 100) / 100
 }
 
+/**
+ * Check if historical data is unavailable for a symbol in the given year
+ * @param {string} symbol - The symbol to check
+ * @param {string} period1 - Start date in YYYY-MM-DD format
+ * @returns {boolean} True if data is likely unavailable, false otherwise
+ */
+function isUnavailableData(symbol, period1) {
+	const startYear = parseInt(period1.split("-")[0], 10)
+	const upperSymbol = symbol.toUpperCase()
+
+	if (upperSymbol === "BZ=F" && startYear <= 2007) {
+		return true
+	}
+
+	if (upperSymbol === "EUR=X" && startYear <= 2003) {
+		return true
+	}
+
+	return false
+}
+
 export async function fetchSingleAssetData(symbol, query) {
 	const { period1, period2 } = query
 
-	if (!symbol) {
-		throw new AppError(400, "Missing required parameter: symbol")
-	}
-
-	if (!period1 || !period2) {
-		throw new AppError(400, "Missing required parameters: period1 and period2")
+	if (isUnavailableData(symbol, period1)) {
+		return {
+			symbol: symbol.toUpperCase(),
+			count: 0,
+			data: [],
+		}
 	}
 
 	await delay()
@@ -27,7 +47,11 @@ export async function fetchSingleAssetData(symbol, query) {
 	})
 
 	if (!history || history.length === 0) {
-		throw new AppError(404, `No historical data found for symbol "${symbol}"`)
+		return {
+			symbol: symbol.toUpperCase(),
+			count: 0,
+			data: [],
+		}
 	}
 
 	const filteredHistory = history.map((item) => {
