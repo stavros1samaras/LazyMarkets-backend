@@ -34,8 +34,8 @@ app.use("/api/db/country", countryReadRouter)
 app.use("/api/db/country", countryWriteRouter)
 
 // ROUTES
-app.use("/prices", fhtGetRouter)
-app.use("/prices", fhtSetRouter)
+app.use("/fht", fhtGetRouter)
+app.use("/fht", fhtSetRouter)
 app.use("/countries", countryReadRouter)
 app.use("/countries", countryWriteRouter)
 
