@@ -73,6 +73,117 @@
 
 /**
  * @swagger
+ * /prices/check-all-symbols/{year}:
+ *   get:
+ *     tags: [FHT]
+ *     summary: Check all symbols from MARKET_ASSETS for a given year
+ *     description: Checks all symbols from all categories (INDICES, BONDS, ENERGY, METALS, FOREX) for the specified year. Returns structured data with database records or "not found" for each symbol.
+ *     parameters:
+ *       - name: year
+ *         in: path
+ *         required: true
+ *         description: Year to check (must be <= 2025)
+ *         schema:
+ *           type: integer
+ *           maximum: 2025
+ *         example: 2024
+ *     responses:
+ *       200:
+ *         description: Structured data for all symbols organized by category
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 INDICES:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       symbol:
+ *                         type: string
+ *                       lower:
+ *                         type: string
+ *                       encoding:
+ *                         type: string
+ *                       data:
+ *                         oneOf:
+ *                           - type: object
+ *                             description: Database record if found
+ *                           - type: string
+ *                             example: "not found"
+ *                 BONDS:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 ENERGY:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 METALS:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 FOREX:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *       400:
+ *         description: Invalid year parameter or year greater than 2025
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /prices/missing-symbols/{year}:
+ *   get:
+ *     tags: [FHT]
+ *     summary: Get symbols that have no data for a given year
+ *     description: Returns an array of symbols from all categories that do not have data in the database for the specified year. If all symbols have data, returns an empty array.
+ *     parameters:
+ *       - name: year
+ *         in: path
+ *         required: true
+ *         description: Year to check (must be <= 2025)
+ *         schema:
+ *           type: integer
+ *           maximum: 2025
+ *         example: 2024
+ *     responses:
+ *       200:
+ *         description: Array of symbols without data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   symbol:
+ *                     type: string
+ *                     description: The symbol name
+ *                   category:
+ *                     type: string
+ *                     description: The asset category
+ *                   encoding:
+ *                     type: string
+ *                     description: The URL-encoded symbol
+ *             example:
+ *               - symbol: "N100"
+ *                 category: "INDICES"
+ *                 encoding: "%5EN100"
+ *               - symbol: "Copper"
+ *                 category: "METALS"
+ *                 encoding: "HG%3DF"
+ *       400:
+ *         description: Invalid year parameter or year greater than 2025
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
  * /api/db/prices/insert-ticker-prices/{symbol}/{name}:
  *   get:
  *     tags: [FHT]

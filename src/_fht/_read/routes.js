@@ -1,7 +1,8 @@
 import express from "express"
 import { getSingleAssetData } from "./db.js"
 import { validateTicker } from "../middleware.js"
-import { validateYear } from "./middleware.js"
+import { validateYear, validateYearMax2025 } from "./middleware.js"
+import { checkAllSymbolsByYear, getSymbolsWithoutData } from "./utils.js"
 import asyncHandler from "../../utils/asyncHandler.js"
 
 const router = express.Router()
@@ -14,6 +15,32 @@ router.get(
 		const { symbol, year } = req.middlewareData
 		const data = await getSingleAssetData(symbol, year)
 		res.status(200).json(data)
+	})
+)
+
+/**
+ * Check all symbols from MARKET_ASSETS for a given year
+ */
+router.get(
+	"/check-all-symbols/:year",
+	validateYearMax2025,
+	asyncHandler(async (req, res) => {
+		const { year } = req.middlewareData
+		const data = await checkAllSymbolsByYear(year)
+		res.status(200).json(data)
+	})
+)
+
+/**
+ * Get symbols that have no data for a given year
+ */
+router.get(
+	"/missing-symbols/:year",
+	validateYearMax2025,
+	asyncHandler(async (req, res) => {
+		const { year } = req.middlewareData
+		const missingSymbols = await getSymbolsWithoutData(year)
+		res.status(200).json(missingSymbols)
 	})
 )
 
