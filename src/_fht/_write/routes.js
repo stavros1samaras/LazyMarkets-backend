@@ -1,6 +1,9 @@
 import express from "express"
 import { setAssetDataRange } from "./db.js"
-import { fetchAndInsertAllMissingSymbols } from "./utils.js"
+import {
+	fetchAndInsertAllMissingSymbols,
+	fetchAndInsertForAllEventYears,
+} from "./utils.js"
 import { validateTicker } from "../middleware.js"
 import { validateName, validateYearRange, validateYearMax2025 } from "./middleware.js"
 import asyncHandler from "../../utils/asyncHandler.js"
@@ -34,6 +37,17 @@ router.get(
 		const { year } = req.middlewareData
 		const processedSymbols = await fetchAndInsertAllMissingSymbols(year)
 		res.status(200).json(processedSymbols)
+	})
+)
+
+/**
+ * Fetch and insert data for all missing symbols for all event years
+ */
+router.get(
+	"/fetch-event-years-data",
+	asyncHandler(async (req, res) => {
+		const results = await fetchAndInsertForAllEventYears()
+		res.status(200).json(results)
 	})
 )
 

@@ -9,6 +9,51 @@
 
 /**
  * @swagger
+ * /prices/get-events:
+ *   get:
+ *     tags: [FHT-NEXT]
+ *     summary: Get all market events
+ *     description: Returns an array of significant market events with their codes, labels, dates, years, and descriptions.
+ *     responses:
+ *       200:
+ *         description: Array of market events
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   code:
+ *                     type: string
+ *                     description: Unique event code
+ *                   label:
+ *                     type: string
+ *                     description: Human-readable event name
+ *                   date:
+ *                     type: string
+ *                     description: Event date in DD-MM-YY format
+ *                   year:
+ *                     type: string
+ *                     description: Event year
+ *                   description:
+ *                     type: string
+ *                     description: Detailed description of the event
+ *             example:
+ *               - code: "TrmpTrrffShck"
+ *                 label: "Trump Tariff Shock"
+ *                 date: "04-04-25"
+ *                 year: "2025"
+ *                 description: "The announcement of significant new tariffs..."
+ *               - code: "GlblPndmcPnc"
+ *                 label: "Global Pandemic Panic"
+ *                 date: "11-03-20"
+ *                 year: "2020"
+ *                 description: "The declaration of a global pandemic..."
+ */
+
+/**
+ * @swagger
  * /prices/insert-ticker-prices/{symbol}/{name}:
  *   get:
  *     tags: [FHT]
@@ -227,13 +272,74 @@
  *                   encoding:
  *                     type: string
  *                     description: The URL-encoded symbol
+ *                   label:
+ *                     type: string
+ *                     description: Human-readable chart name
  *             example:
  *               - symbol: "N100"
  *                 dbSymbol: "^N100"
  *                 category: "INDICES"
  *                 encoding: "%5EN100"
+ *                 label: "NASDAQ 100"
  *       400:
  *         description: Invalid year parameter or year greater than 2025
+ *       500:
+ *         description: Internal server error during data fetching or insertion
+ */
+
+/**
+ * @swagger
+ * /prices/fetch-event-years-data:
+ *   get:
+ *     tags: [FHT-NEXT]
+ *     summary: Fetch and insert data for all missing symbols for all event years
+ *     description: Extracts unique years from the EVENTS configuration, then for each year, identifies and fetches data for all missing symbols. This is a comprehensive endpoint that processes multiple years sequentially. Note: This operation may take a long time due to 20-second delays between each symbol fetch.
+ *     responses:
+ *       200:
+ *         description: Object containing results for each event year
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               additionalProperties:
+ *                 type: object
+ *                 properties:
+ *                   totalMissing:
+ *                     type: integer
+ *                     description: Number of missing symbols for this year
+ *                   symbols:
+ *                     type: array
+ *                     description: List of processed symbols
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         symbol:
+ *                           type: string
+ *                         dbSymbol:
+ *                           type: string
+ *                         category:
+ *                           type: string
+ *                         encoding:
+ *                           type: string
+ *                         label:
+ *                           type: string
+ *             example:
+ *               "2020":
+ *                 totalMissing: 2
+ *                 symbols:
+ *                   - symbol: "GSPC"
+ *                     dbSymbol: "^GSPC"
+ *                     category: "INDICES"
+ *                     encoding: "%5EGSPC"
+ *                     label: "S&P 500"
+ *               "2024":
+ *                 totalMissing: 1
+ *                 symbols:
+ *                   - symbol: "WTI"
+ *                     dbSymbol: "CL=F"
+ *                     category: "ENERGY"
+ *                     encoding: "CL%3DF"
+ *                     label: "Crude Oil"
  *       500:
  *         description: Internal server error during data fetching or insertion
  */

@@ -2,6 +2,7 @@ import { getSymbolsWithoutData } from "../_read/utils.js"
 import { fetchSingleAssetData } from "./yahoo-finance.js"
 import { delay } from "../../utils/delay.js"
 import { insertNextDocument } from "./db.js"
+import { EVENTS } from "../Database.js"
 
 /**
  * Fetch and insert data for a single missing symbol
@@ -45,4 +46,33 @@ export async function fetchAndInsertAllMissingSymbols(year) {
 	}
 
 	return missingSymbols
+}
+
+/**
+ * Get unique years from EVENTS array
+ * @returns {Array} Array of unique years
+ */
+function getUniqueEventYears() {
+	const years = EVENTS.map((event) => parseInt(event.year, 10))
+	return [...new Set(years)].sort((a, b) => a - b)
+}
+
+/**
+ * Fetch and insert data for all missing symbols for all event years
+ * @returns {Promise<Object>} Object with results for each year
+ */
+export async function fetchAndInsertForAllEventYears() {
+	const eventYears = getUniqueEventYears()
+	const results = {}
+
+	for (const year of eventYears) {
+		console.log(`Processing year: ${year}`)
+		const processedSymbols = await fetchAndInsertAllMissingSymbols(year)
+		results[year] = {
+			totalMissing: processedSymbols.length,
+			symbols: processedSymbols,
+		}
+	}
+
+	return results
 }

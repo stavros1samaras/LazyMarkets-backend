@@ -3,6 +3,7 @@ import { getSingleAssetData } from "./db.js"
 import { validateTicker } from "../middleware.js"
 import { validateYear, validateYearMax2025 } from "./middleware.js"
 import { checkAllSymbolsByYear, getSymbolsWithoutData } from "./utils.js"
+import { EVENTS } from "../Database.js"
 import asyncHandler from "../../utils/asyncHandler.js"
 
 const router = express.Router()
@@ -41,6 +42,16 @@ router.get(
 		const { year } = req.middlewareData
 		const missingSymbols = await getSymbolsWithoutData(year)
 		res.status(200).json(missingSymbols)
+	})
+)
+
+/**
+ * Get all market events
+ */
+router.get(
+	"/get-events",
+	asyncHandler(async (req, res) => {
+		res.status(200).json(EVENTS)
 	})
 )
 
