@@ -19,6 +19,8 @@ export async function checkAllSymbolsByYear(year) {
 				symbol: asset.symbol,
 				lower: asset.lower,
 				encoding: asset.encoding,
+				dbSymbol: asset.dbSymbol,
+				label: asset.label,
 				data: record ? record.data : "not found",
 			})
 		}
@@ -41,8 +43,10 @@ export async function getSymbolsWithoutData(year) {
 			if (asset.data === "not found") {
 				missingSymbols.push({
 					symbol: asset.symbol,
+					dbSymbol: asset.dbSymbol,
 					category,
 					encoding: asset.encoding,
+					label: asset.label,
 				})
 			}
 		}

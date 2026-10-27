@@ -3,6 +3,8 @@
  * tags:
  *   - name: FHT
  *     description: Database
+ *   - name: FHT-NEXT
+ *     description: Next generation FHT endpoints
  */
 
 /**
@@ -75,7 +77,7 @@
  * @swagger
  * /prices/check-all-symbols/{year}:
  *   get:
- *     tags: [FHT]
+ *     tags: [FHT-NEXT]
  *     summary: Check all symbols from MARKET_ASSETS for a given year
  *     description: Checks all symbols from all categories (INDICES, BONDS, ENERGY, METALS, FOREX) for the specified year. Returns structured data with database records or "not found" for each symbol.
  *     parameters:
@@ -138,7 +140,7 @@
  * @swagger
  * /prices/missing-symbols/{year}:
  *   get:
- *     tags: [FHT]
+ *     tags: [FHT-NEXT]
  *     summary: Get symbols that have no data for a given year
  *     description: Returns an array of symbols from all categories that do not have data in the database for the specified year. If all symbols have data, returns an empty array.
  *     parameters:
@@ -163,6 +165,9 @@
  *                   symbol:
  *                     type: string
  *                     description: The symbol name
+ *                   dbSymbol:
+ *                     type: string
+ *                     description: The database symbol format
  *                   category:
  *                     type: string
  *                     description: The asset category
@@ -171,15 +176,66 @@
  *                     description: The URL-encoded symbol
  *             example:
  *               - symbol: "N100"
+ *                 dbSymbol: "^N100"
  *                 category: "INDICES"
  *                 encoding: "%5EN100"
  *               - symbol: "Copper"
+ *                 dbSymbol: "HG=F"
  *                 category: "METALS"
  *                 encoding: "HG%3DF"
  *       400:
  *         description: Invalid year parameter or year greater than 2025
  *       500:
  *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /prices/fetch-missing-symbols/{year}:
+ *   get:
+ *     tags: [FHT-NEXT]
+ *     summary: Fetch and insert data for all symbols missing data for a given year
+ *     description: Identifies symbols without data for the specified year, fetches historical data from Yahoo Finance for each missing symbol (with 20-second delays), and inserts the data into the FHT_NEXT collection. Returns the list of processed symbols.
+ *     parameters:
+ *       - name: year
+ *         in: path
+ *         required: true
+ *         description: Year to fetch and insert data for (must be <= 2025)
+ *         schema:
+ *           type: integer
+ *           maximum: 2025
+ *         example: 2024
+ *     responses:
+ *       200:
+ *         description: Array of symbols that were processed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   symbol:
+ *                     type: string
+ *                     description: The symbol name
+ *                   dbSymbol:
+ *                     type: string
+ *                     description: The database symbol format
+ *                   category:
+ *                     type: string
+ *                     description: The asset category
+ *                   encoding:
+ *                     type: string
+ *                     description: The URL-encoded symbol
+ *             example:
+ *               - symbol: "N100"
+ *                 dbSymbol: "^N100"
+ *                 category: "INDICES"
+ *                 encoding: "%5EN100"
+ *       400:
+ *         description: Invalid year parameter or year greater than 2025
+ *       500:
+ *         description: Internal server error during data fetching or insertion
  */
 
 /**
