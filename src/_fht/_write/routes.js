@@ -3,6 +3,7 @@ import {
 	fetchAndInsertAllMissingSymbols,
 	fetchAndInsertForAllEventYears,
 } from "./utils.js"
+import { deleteYearRecords } from "./db.js"
 import { validateYearRange } from "./middleware.js"
 import asyncHandler from "../../utils/asyncHandler.js"
 
@@ -29,6 +30,19 @@ router.post(
 	asyncHandler(async (req, res) => {
 		const results = await fetchAndInsertForAllEventYears()
 		res.status(200).json(results)
+	})
+)
+
+/**
+ * Delete all records for a given year
+ */
+router.delete(
+	"/delete-year/:year",
+	validateYearRange,
+	asyncHandler(async (req, res) => {
+		const { year } = req.middlewareData
+		const result = await deleteYearRecords(year)
+		res.status(200).json({ year, deletedCount: result.deletedCount })
 	})
 )
 

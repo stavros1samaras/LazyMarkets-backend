@@ -1,7 +1,7 @@
 import express from "express"
 import { validateYearRange } from "./middleware.js"
 import { checkAllSymbolsByYear, getSymbolsWithoutData } from "./utils.js"
-import { EVENTS } from "../Database.js"
+import { EVENTS, EVENTS_ROUTES } from "../Database.js"
 import asyncHandler from "../../utils/asyncHandler.js"
 
 const router = express.Router()
@@ -39,6 +39,16 @@ router.get(
 	"/events/get-events",
 	asyncHandler(async (req, res) => {
 		res.status(200).json(EVENTS)
+	})
+)
+
+/**
+ * Get the event codes
+ */
+router.get(
+	"/events/get-event-codes",
+	asyncHandler(async (req, res) => {
+		res.status(200).json(EVENTS_ROUTES)
 	})
 )
 

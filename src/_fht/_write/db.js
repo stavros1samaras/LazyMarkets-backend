@@ -18,3 +18,17 @@ export async function insertNextDocument(doc) {
 		)
 	}
 }
+
+/**
+ * Delete all documents for a given year from FHT_NEXT collection
+ * @param {number} year - The year of the documents to delete
+ * @returns {Promise<Object>} The deleteMany result
+ */
+export async function deleteYearRecords(year) {
+	try {
+		const result = await db.collection(FHT_NEXT_COLLECTION).deleteMany({ year })
+		return result
+	} catch (error) {
+		throw new AppError(500, `Failed to delete records for year ${year}: ${error.message}`)
+	}
+}

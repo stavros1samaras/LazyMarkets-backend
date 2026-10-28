@@ -54,6 +54,31 @@
 
 /**
  * @swagger
+ * /fht/events/get-event-codes:
+ *   get:
+ *     tags: [FHT-NEXT]
+ *     summary: Get the event codes
+ *     description: Returns an array containing only the codes of the market events, derived from the EVENTS configuration.
+ *     responses:
+ *       200:
+ *         description: Array of event codes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             example:
+ *               - "TrmpTrrffShck"
+ *               - "TrmpTrrffShck2"
+ *               - "TchStckRlly"
+ *               - "LPrcCrsh"
+ *               - "FdrlRsrvRtHk"
+ *               - "GlblPndmcPnc"
+ */
+
+/**
+ * @swagger
  * /fht/get-all-symbols/{year}:
  *   get:
  *     tags: [FHT-NEXT]
@@ -286,4 +311,41 @@
  *                     label: "NASDAQ 100"
  *       500:
  *         description: Internal server error during data fetching or insertion
+ */
+
+/**
+ * @swagger
+ * /fht/delete-year/{year}:
+ *   delete:
+ *     tags: [FHT-NEXT]
+ *     summary: Delete all records for a given year
+ *     description: Deletes all documents with the specified year from the FHT_NEXT collection.
+ *     parameters:
+ *       - name: year
+ *         in: path
+ *         required: true
+ *         description: Year of the records to delete (must be between 2001 and the previous year)
+ *         schema:
+ *           type: integer
+ *           minimum: 2001
+ *         example: 2024
+ *     responses:
+ *       200:
+ *         description: Number of deleted records
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 year:
+ *                   type: integer
+ *                 deletedCount:
+ *                   type: integer
+ *             example:
+ *               year: 2024
+ *               deletedCount: 14
+ *       400:
+ *         description: Invalid year parameter or year outside the allowed range
+ *       500:
+ *         description: Internal server error
  */
