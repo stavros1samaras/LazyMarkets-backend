@@ -9,51 +9,6 @@
 
 /**
  * @swagger
- * /fht/events/get-events:
- *   get:
- *     tags: [FHT-NEXT]
- *     summary: Get all market events
- *     description: Returns an array of significant market events with their codes, labels, dates, years, and descriptions.
- *     responses:
- *       200:
- *         description: Array of market events
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   code:
- *                     type: string
- *                     description: Unique event code
- *                   label:
- *                     type: string
- *                     description: Human-readable event name
- *                   date:
- *                     type: string
- *                     description: Event date in DD-MM-YY format
- *                   year:
- *                     type: string
- *                     description: Event year
- *                   description:
- *                     type: string
- *                     description: Detailed description of the event
- *             example:
- *               - code: "TrmpTrrffShck"
- *                 label: "Trump Tariff Shock"
- *                 date: "04-04-25"
- *                 year: "2025"
- *                 description: "The announcement of significant new tariffs..."
- *               - code: "GlblPndmcPnc"
- *                 label: "Global Pandemic Panic"
- *                 date: "11-03-20"
- *                 year: "2020"
- *                 description: "The declaration of a global pandemic..."
- */
-
-/**
- * @swagger
  * /fht/events/get-event-codes:
  *   get:
  *     tags: [FHT-NEXT]
@@ -75,6 +30,105 @@
  *               - "LPrcCrsh"
  *               - "FdrlRsrvRtHk"
  *               - "GlblPndmcPnc"
+ */
+
+/**
+ * @swagger
+ * /fht/events/get-event-labels-with-codes:
+ *   get:
+ *     tags: [FHT-NEXT]
+ *     summary: Get the event labels
+ *     description: Returns an array of objects containing the code and label of each market event.
+ *     responses:
+ *       200:
+ *         description: Array of event code/label pairs
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   code:
+ *                     type: string
+ *                   label:
+ *                     type: string
+ *             example:
+ *               - code: "TrmpTrrffShck"
+ *                 label: "Trump Tariff Shock"
+ *               - code: "GlblPndmcPnc"
+ *                 label: "COVID-19 Market Crash"
+ */
+
+/**
+ * @swagger
+ * /fht/events/get-event-data/{eventCode}:
+ *   get:
+ *     tags: [FHT-NEXT]
+ *     summary: Get data for an event
+ *     description: Returns the event matching the provided event code.
+ *     parameters:
+ *       - name: eventCode
+ *         in: path
+ *         required: true
+ *         description: The event code
+ *         schema:
+ *           type: string
+ *         example: IraqWar
+ *     responses:
+ *       200:
+ *         description: The matching event
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 code:
+ *                   type: string
+ *                 label:
+ *                   type: string
+ *                 date:
+ *                   type: string
+ *                 year:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *                 data:
+ *                   type: array
+ *                   description: Market asset records for the event's year
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       symbol:
+ *                         type: string
+ *                       name:
+ *                         type: string
+ *                       count:
+ *                         type: integer
+ *                       data:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             date:
+ *                               type: string
+ *                             close:
+ *                               type: number
+ *             example:
+ *               code: "IraqWar"
+ *               label: "Iraq War"
+ *               date: "20-03-03"
+ *               year: "2003"
+ *               description: "The US-led invasion of Iraq increased geopolitical uncertainty..."
+ *               data:
+ *                 - symbol: "^GSPC"
+ *                   name: "S&P 500"
+ *                   count: 252
+ *                   data:
+ *                     - date: "02-01-03"
+ *                       close: 909.03
+ *       404:
+ *         description: Event code not found
  */
 
 /**

@@ -253,3 +253,5 @@ export const EVENTS = [
 ]
 
 export const EVENTS_ROUTES = EVENTS.map((event) => event.code)
+
+export const EVENTS_LABELS_WITH_CODES = EVENTS.map(({ code, label }) => ({ code, label }))

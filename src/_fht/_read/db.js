@@ -20,3 +20,16 @@ export async function getRecordBySymbolAndYear(symbol, year) {
 		)
 	}
 }
+
+/**
+ * Get all records for a given year from FHT_NEXT collection
+ * @param {number} year - The year to query
+ * @returns {Promise<Array>} All records with the given year
+ */
+export async function getRecordsByYear(year) {
+	try {
+		return await db.collection(FHT_NEXT_COLLECTION).find({ year }).toArray()
+	} catch (error) {
+		throw new AppError(500, `Database query failed for year ${year}: ${error.message}`)
+	}
+}

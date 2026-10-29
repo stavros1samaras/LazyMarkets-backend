@@ -1,4 +1,19 @@
 import AppError from "../../AppError.js"
+import { EVENTS_ROUTES } from "../Database.js"
+
+/**
+ * Validate event code parameter against EVENTS_ROUTES
+ */
+export const validateEventCode = (req, res, next) => {
+	const code = req.params.eventCode
+
+	if (!code || !EVENTS_ROUTES.includes(code)) {
+		throw new AppError(404, `Event code "${code}" not found`)
+	}
+
+	req.middlewareData.code = code
+	next()
+}
 
 /**
  * Validate year parameter: must be >= 2001 and <= current year - 1

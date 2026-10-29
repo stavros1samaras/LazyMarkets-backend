@@ -1,7 +1,8 @@
 import express from "express"
-import { validateYearRange } from "./middleware.js"
+import { getRecordsByYear } from "./db.js"
+import { validateYearRange, validateEventCode } from "./middleware.js"
 import { checkAllSymbolsByYear, getSymbolsWithoutData } from "./utils.js"
-import { EVENTS, EVENTS_ROUTES } from "../Database.js"
+import { EVENTS, EVENTS_ROUTES, EVENTS_LABELS_WITH_CODES } from "../Database.js"
 import asyncHandler from "../../utils/asyncHandler.js"
 
 const router = express.Router()
@@ -33,22 +34,42 @@ router.get(
 )
 
 /**
- * Get all market events
- */
-router.get(
-	"/events/get-events",
-	asyncHandler(async (req, res) => {
-		res.status(200).json(EVENTS)
-	})
-)
-
-/**
  * Get the event codes
  */
 router.get(
 	"/events/get-event-codes",
 	asyncHandler(async (req, res) => {
 		res.status(200).json(EVENTS_ROUTES)
+	})
+)
+
+/**
+ * Get the event labels
+ */
+router.get(
+	"/events/get-event-labels-with-codes",
+	asyncHandler(async (req, res) => {
+		res.status(200).json(EVENTS_LABELS_WITH_CODES)
+	})
+)
+
+/**
+ * Get data for an event
+ */
+router.get(
+	"/events/get-event-data/:eventCode",
+	validateEventCode,
+	asyncHandler(async (req, res) => {
+		const { code } = req.middlewareData
+		const event = EVENTS.find((event) => event.code === code)
+		const records = await getRecordsByYear(parseInt(event.year, 10))
+		const data = records.map((record) => ({
+			symbol: record.symbol,
+			name: record.name,
+			count: record.count,
+			data: record.data,
+		}))
+		res.status(200).json({ ...event, data })
 	})
 )
 
