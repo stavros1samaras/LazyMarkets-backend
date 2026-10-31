@@ -103,6 +103,9 @@
  *                         type: string
  *                       name:
  *                         type: string
+ *                       category:
+ *                         type: string
+ *                         description: The asset category
  *                       count:
  *                         type: integer
  *                       data:
@@ -123,6 +126,7 @@
  *               data:
  *                 - symbol: "^GSPC"
  *                   name: "S&P 500"
+ *                   category: "Indices-US"
  *                   count: 252
  *                   data:
  *                     - date: "02-01-03"
@@ -166,6 +170,9 @@
  *                         type: string
  *                       encoding:
  *                         type: string
+ *                       category:
+ *                         type: string
+ *                         description: The asset category
  *                       data:
  *                         oneOf:
  *                           - type: object
@@ -232,15 +239,20 @@
  *                   encoding:
  *                     type: string
  *                     description: The URL-encoded symbol
+ *                   label:
+ *                     type: string
+ *                     description: Human-readable chart name
  *             example:
  *               - symbol: "N100"
  *                 dbSymbol: "^N100"
- *                 category: "INDICES"
+ *                 category: "Indices-EU"
  *                 encoding: "%5EN100"
+ *                 label: "Euronext 100"
  *               - symbol: "Copper"
  *                 dbSymbol: "HG=F"
- *                 category: "METALS"
+ *                 category: "Metals"
  *                 encoding: "HG%3DF"
+ *                 label: "Copper"
  *       400:
  *         description: Invalid year parameter or year outside the allowed range
  *       500:
@@ -291,9 +303,9 @@
  *             example:
  *               - symbol: "N100"
  *                 dbSymbol: "^N100"
- *                 category: "INDICES"
+ *                 category: "Indices-EU"
  *                 encoding: "%5EN100"
- *                 label: "NASDAQ 100"
+ *                 label: "Euronext 100"
  *       400:
  *         description: Invalid year parameter or year outside the allowed range
  *       500:
@@ -347,12 +359,12 @@
  *                 symbols:
  *                   - symbol: "GSPC"
  *                     dbSymbol: "^GSPC"
- *                     category: "INDICES"
+ *                     category: "Indices-US"
  *                     encoding: "%5EGSPC"
  *                     label: "S&P 500"
  *                   - symbol: "WTI"
  *                     dbSymbol: "CL=F"
- *                     category: "ENERGY"
+ *                     category: "Energy"
  *                     encoding: "CL%3DF"
  *                     label: "Crude Oil"
  *               "2024":
@@ -360,9 +372,9 @@
  *                 symbols:
  *                   - symbol: "N100"
  *                     dbSymbol: "^N100"
- *                     category: "INDICES"
+ *                     category: "Indices-EU"
  *                     encoding: "%5EN100"
- *                     label: "NASDAQ 100"
+ *                     label: "Euronext 100"
  *       500:
  *         description: Internal server error during data fetching or insertion
  */
@@ -402,4 +414,29 @@
  *         description: Invalid year parameter or year outside the allowed range
  *       500:
  *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /fht/get-asset-categories:
+ *   get:
+ *     tags: [FHT-NEXT]
+ *     summary: Get all asset categories
+ *     description: Returns an array containing every distinct category defined in MARKET_ASSETS, in the order they first appear.
+ *     responses:
+ *       200:
+ *         description: Array of asset categories
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             example:
+ *               - "Indices-US"
+ *               - "Indices-EU"
+ *               - "Bonds"
+ *               - "Energy"
+ *               - "Metals"
+ *               - "Forex"
  */

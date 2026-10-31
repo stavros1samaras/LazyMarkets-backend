@@ -21,6 +21,7 @@ export async function checkAllSymbolsByYear(year) {
 				encoding: asset.encoding,
 				dbSymbol: asset.dbSymbol,
 				label: asset.label,
+				category: asset.category,
 				data: record ? record.data : "not found",
 			})
 		}
@@ -38,13 +39,13 @@ export async function getSymbolsWithoutData(year) {
 	const allData = await checkAllSymbolsByYear(year)
 	const missingSymbols = []
 
-	for (const [category, assets] of Object.entries(allData)) {
+	for (const assets of Object.values(allData)) {
 		for (const asset of assets) {
 			if (asset.data === "not found") {
 				missingSymbols.push({
 					symbol: asset.symbol,
 					dbSymbol: asset.dbSymbol,
-					category,
+					category: asset.category,
 					encoding: asset.encoding,
 					label: asset.label,
 				})

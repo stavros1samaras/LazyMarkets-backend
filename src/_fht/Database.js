@@ -6,6 +6,7 @@ export const MARKET_ASSETS = {
 			encoding: "%5EGSPC",
 			dbSymbol: "^GSPC",
 			label: "S&P 500",
+			category: "Indices-US",
 		},
 		{
 			symbol: "IXIC",
@@ -13,6 +14,7 @@ export const MARKET_ASSETS = {
 			encoding: "%5EIXIC",
 			dbSymbol: "^IXIC",
 			label: "NASDAQ",
+			category: "Indices-US",
 		},
 		{
 			symbol: "FTSE",
@@ -20,6 +22,7 @@ export const MARKET_ASSETS = {
 			encoding: "%5EFTSE",
 			dbSymbol: "^FTSE",
 			label: "FTSE 100",
+			category: "Indices-EU",
 		},
 		{
 			symbol: "FCHI",
@@ -27,6 +30,7 @@ export const MARKET_ASSETS = {
 			encoding: "%5EFCHI",
 			dbSymbol: "^FCHI",
 			label: "CAC 40",
+			category: "Indices-EU",
 		},
 		{
 			symbol: "GDAXI",
@@ -34,13 +38,15 @@ export const MARKET_ASSETS = {
 			encoding: "%5EGDAXI",
 			dbSymbol: "^GDAXI",
 			label: "DAX",
+			category: "Indices-EU",
 		},
 		{
 			symbol: "N100",
 			lower: "n100",
 			encoding: "%5EN100",
 			dbSymbol: "^N100",
-			label: "NASDAQ 100",
+			label: "Euronext 100",
+			category: "Indices-EU",
 		},
 	],
 
@@ -51,6 +57,7 @@ export const MARKET_ASSETS = {
 			encoding: "%5ETNX",
 			dbSymbol: "^TNX",
 			label: "10-Year Treasury",
+			category: "Bonds",
 		},
 	],
 
@@ -61,6 +68,7 @@ export const MARKET_ASSETS = {
 			encoding: "CL%3DF",
 			dbSymbol: "CL=F",
 			label: "Crude Oil",
+			category: "Energy",
 		},
 		{
 			symbol: "NG",
@@ -68,6 +76,7 @@ export const MARKET_ASSETS = {
 			encoding: "NG%3DF",
 			dbSymbol: "NG=F",
 			label: "Natural Gas",
+			category: "Energy",
 		},
 		{
 			symbol: "Brent",
@@ -75,6 +84,7 @@ export const MARKET_ASSETS = {
 			encoding: "BZ%3DF",
 			dbSymbol: "BZ=F",
 			label: "Brent Crude",
+			category: "Energy",
 		},
 	],
 
@@ -85,6 +95,7 @@ export const MARKET_ASSETS = {
 			encoding: "GC%3DF",
 			dbSymbol: "GC=F",
 			label: "Gold",
+			category: "Metals",
 		},
 		{
 			symbol: "Silver",
@@ -92,6 +103,7 @@ export const MARKET_ASSETS = {
 			encoding: "SI%3DF",
 			dbSymbol: "SI=F",
 			label: "Silver",
+			category: "Metals",
 		},
 		{
 			symbol: "Copper",
@@ -99,6 +111,7 @@ export const MARKET_ASSETS = {
 			encoding: "HG%3DF",
 			dbSymbol: "HG=F",
 			label: "Copper",
+			category: "Metals",
 		},
 	],
 
@@ -109,6 +122,7 @@ export const MARKET_ASSETS = {
 			encoding: "EUR%3DX",
 			dbSymbol: "EUR=X",
 			label: "EUR/USD",
+			category: "Forex",
 		},
 	],
 }
@@ -255,3 +269,11 @@ export const EVENTS = [
 export const EVENTS_ROUTES = EVENTS.map((event) => event.code)
 
 export const EVENTS_LABELS_WITH_CODES = EVENTS.map(({ code, label }) => ({ code, label }))
+
+export const MARKET_ASSET_CATEGORIES = [
+	...new Set(
+		Object.values(MARKET_ASSETS).flatMap((assets) =>
+			assets.map(({ category }) => category)
+		)
+	),
+]

@@ -8,10 +8,11 @@ import { EVENTS } from "../Database.js"
  * Fetch and insert data for a single missing symbol
  * @param {string} dbSymbol - The database symbol format
  * @param {string} label - The human-readable label for the symbol
+ * @param {string} category - The asset category
  * @param {number} year - The year to fetch data for
  * @returns {Promise<void>}
  */
-async function fetchAndInsertMissingSymbol(dbSymbol, label, year) {
+async function fetchAndInsertMissingSymbol(dbSymbol, label, category, year) {
 	const period1 = `${year}-01-01`
 	const period2 = `${year + 1}-01-01`
 
@@ -25,6 +26,7 @@ async function fetchAndInsertMissingSymbol(dbSymbol, label, year) {
 	const doc = {
 		symbol: data.symbol,
 		name: label,
+		category,
 		year,
 		count: data.count,
 		data: data.data,
@@ -42,7 +44,12 @@ export async function fetchAndInsertAllMissingSymbols(year) {
 
 	// Process each missing symbol
 	for (const symbol of missingSymbols) {
-		await fetchAndInsertMissingSymbol(symbol.dbSymbol, symbol.label, year)
+		await fetchAndInsertMissingSymbol(
+			symbol.dbSymbol,
+			symbol.label,
+			symbol.category,
+			year
+		)
 	}
 
 	return missingSymbols

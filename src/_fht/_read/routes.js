@@ -2,7 +2,12 @@ import express from "express"
 import { getRecordsByYear } from "./db.js"
 import { validateYearRange, validateEventCode } from "./middleware.js"
 import { checkAllSymbolsByYear, getSymbolsWithoutData } from "./utils.js"
-import { EVENTS, EVENTS_ROUTES, EVENTS_LABELS_WITH_CODES } from "../Database.js"
+import {
+	EVENTS,
+	EVENTS_ROUTES,
+	EVENTS_LABELS_WITH_CODES,
+	MARKET_ASSET_CATEGORIES,
+} from "../Database.js"
 import asyncHandler from "../../utils/asyncHandler.js"
 
 const router = express.Router()
@@ -30,6 +35,16 @@ router.get(
 		const { year } = req.middlewareData
 		const missingSymbols = await getSymbolsWithoutData(year)
 		res.status(200).json(missingSymbols)
+	})
+)
+
+/**
+ * Get all asset categories
+ */
+router.get(
+	"/get-asset-categories",
+	asyncHandler(async (req, res) => {
+		res.status(200).json(MARKET_ASSET_CATEGORIES)
 	})
 )
 
@@ -66,6 +81,7 @@ router.get(
 		const data = records.map((record) => ({
 			symbol: record.symbol,
 			name: record.name,
+			category: record.category,
 			count: record.count,
 			data: record.data,
 		}))
